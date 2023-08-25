@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Consultar Cliente</title>
+
+    <style>
+        body {
+            background-image: url("https://duaslinhas.pt/wp-content/uploads/2022/01/pessoas-3.jpeg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center center;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	 
+        <a class="navbar-brand" href="/"> <img
+					src="https://cdn-icons-png.flaticon.com/512/5974/5974907.png"
+					style="width: 26px">
+		</a>
+ 
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">INICIO</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/cadastrar-cliente}">Novo Paciente</a>
+                </li>
+            </ul>
+        </div>
+        
+         <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Navegador
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/consultarAgendamento">AGENDAMENTO</a></li>
+                <li><a class="dropdown-item" href="/cadastrarAgendamento">NOVO AGENDAMENTO</a></li>
+
+                <li><a class="dropdown-item" href="/consultarCliente">PACIENTE</a></li>
+                <li><a class="dropdown-item" href="/cadastrar-cliente">NOVO PACIENTE</a></li>
+
+                <li><a class="dropdown-item" href="/consultarProcedimento">PROCEDIMENTO</a></li>
+                <li><a class="dropdown-item" href="/cadastrarProcedimento">NOVO PROCEDIMENTO</a></li>
+
+                <li><a class="dropdown-item" href="/consultarMedico">MEDICO</a></li>
+                <li><a class="dropdown-item" href="/cadastrar_Medico">NOVO MEDICO</a></li>
+
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="/">INICIO</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">PACIENTES</h3>
+                    </div>
+                    
+                        <div class="mb-4">
+					        <label for="nomeFiltro" class="form-label">Filtrar por Nome:</label>
+					        <input type="text" class="form-control" id="nomeFiltro" placeholder="Digite o nome">
+					    </div>
+                    
+                    <div class="card-body">
+                    	<div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    
+                                    <th>Nome</th>
+                                    <th>Data de Nascimento</th>
+                                    <th>Endereco</th>
+                                    <th>CEP</th>
+                                    <th>Email</th>
+                                    <th>Telefone</th>
+                                    <th class="text-center">Alterar</th>
+                                    <th class="text-center">Excluir</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+								<tr th:each="cliente : ${clientes}">
+									
+									<td th:text="${cliente.nome}"></td>
+									<td th:text="${cliente.dataNascimento}"></td>
+									<td th:text="${cliente.endereco}"></td>
+									<td th:text="${cliente.cep}"></td>
+									<td th:text="${cliente.email}"></td>
+									<td th:text="${cliente.telefone}"></td>
+									<td>
+										<a th:href="@{/editarCliente/{id}(id=${cliente.id})}" class="btn btn-primary">Editar</a>
+									</td>
+									
+									<td><a th:href="@{/delete/{id}(id=${cliente.id})}"
+											class="btn btn-danger"
+											th:attr="onclick='return confirm(\'Deseja excluir o cliente ' + ${cliente.nome} + '?\')'">Remover</a>
+									</td>
+
+								</tr>
+							</tbody>												
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<script>
+	    const inputFiltro = document.getElementById('nomeFiltro');
+	    const tabelaClientes = document.querySelector('.table');
+	
+	    inputFiltro.addEventListener('input', function () {
+	        const filtro = inputFiltro.value.trim().toLowerCase();
+	        const linhasClientes = tabelaClientes.querySelectorAll('tbody tr');
+	
+	        linhasClientes.forEach(function (linhaCliente) {
+	            const nomeCliente = linhaCliente.querySelector('td:nth-child(2)').textContent.toLowerCase();
+	            if (nomeCliente.includes(filtro)) {
+	                linhaCliente.style.display = '';
+	            } else {
+	                linhaCliente.style.display = 'none';
+	            }
+	        });
+	    });
+	</script>
+
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>

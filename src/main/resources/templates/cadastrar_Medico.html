@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Novo Medico</title>
+
+    <style>
+        body {
+            background-image: url("https://cdn.lecturio.com/assets/Featured-image-Student-Blog-Hospital-Team.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center center;
+        }
+
+        .container {
+            background-color: rgba(131, 179, 241, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+
+    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <a class="navbar-brand" href="/"> <img src="https://cdn-icons-png.flaticon.com/512/5974/5974907.png"
+                style="width: 30px">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">INICIO</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/consultarMedico}">Medicos</a>
+                </li>
+            </ul>
+        </div>
+         <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Navegador
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/consultarAgendamento">AGENDAMENTO</a></li>
+                <li><a class="dropdown-item" href="/cadastrarAgendamento">NOVO AGENDAMENTO</a></li>
+
+                <li><a class="dropdown-item" href="/consultarCliente">PACIENTE</a></li>
+                <li><a class="dropdown-item" href="/cadastrar-cliente">NOVO PACIENTE</a></li>
+
+                <li><a class="dropdown-item" href="/consultarProcedimento">PROCEDIMENTO</a></li>
+                <li><a class="dropdown-item" href="/cadastrarProcedimento">NOVO PROCEDIMENTO</a></li>
+
+                <li><a class="dropdown-item" href="/consultarMedico">MEDICO</a></li>
+                <li><a class="dropdown-item" href="/cadastrar_Medico">NOVO MEDICO</a></li>
+
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="/">INICIO</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+
+            <div class="container mt-4">
+            <div style="background-color: rgba(255, 255, 255, 0.5);">
+                <h1 class="text-center">Novo Medico</h1>
+			</div>
+                <form th:action="@{/salvar-medico}" method="post">
+
+                    <div class="form-group">
+                        <label for="nome">Nome:</label>
+                        <input type="text" class="form-control" id="nome" name="nome" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="crm">CRM:</label>
+                        <input type="text" class="form-control" id="crm" name="crm" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="especialidade">Especialidade:</label>
+                        <input type="text" class="form-control" id="especialidade" name="especialidade" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required placeholder="email@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefone">Telefone:</label>
+                        <input type="text" class="form-control" id="telefone" name="telefone" required placeholder="(ddd)x.xxxx-xxxx">
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>

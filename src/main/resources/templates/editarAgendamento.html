@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>Editar Agendamento</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	 
+        <a class="navbar-brand" href="/"> <img
+					src="https://cdn-icons-png.flaticon.com/512/5974/5974907.png"
+					style="width: 26px">
+		</a>
+ 
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Página Inicial</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/cadastrarAgendamento}">Cadastrar Agendamento</a>
+                </li>
+            </ul>
+        </div>
+         <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Navegador
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/consultarAgendamento">AGENDAMENTO</a></li>
+                <li><a class="dropdown-item" href="/cadastrarAgendamento">NOVO AGENDAMENTO</a></li>
+
+                <li><a class="dropdown-item" href="/consultarCliente">PACIENTE</a></li>
+                <li><a class="dropdown-item" href="/cadastrar-cliente">NOVO PACIENTE</a></li>
+
+                <li><a class="dropdown-item" href="/consultarProcedimento">PROCEDIMENTO</a></li>
+                <li><a class="dropdown-item" href="/cadastrarProcedimento">NOVO PROCEDIMENTO</a></li>
+
+                <li><a class="dropdown-item" href="/consultarMedico">MEDICO</a></li>
+                <li><a class="dropdown-item" href="/cadastrar_Medico">NOVO MEDICO</a></li>
+
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="/">INICIO</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>Editar Agendamento</h1>
+        
+        <form th:action="@{/editarAgendamento/{id}(id=${agendamento.id})}" th:object="${agendamento}" method="post">
+            <div class="mb-3">
+                <label for="data" class="form-label">Data</label>
+                <input type="date" class="form-control" id="data" th:field="*{data}" required>
+            </div>
+            <div class="mb-3">
+                <label for="hora" class="form-label">Hora</label>
+                <input type="time" class="form-control" id="hora" th:field="*{hora}" required>
+            </div>
+            <div class="mb-3">
+                <label for="cliente" class="form-label">Cliente</label>
+                <select class="form-control" id="cliente" th:field="*{cliente}" required>
+                    <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nome}"></option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="medico" class="form-label">Médico</label>
+                <select class="form-control" id="medico" th:field="*{medico}" required>
+                    <option th:each="medico : ${medicos}" th:value="${medico.id}" th:text="${medico.nome}"></option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="procedimento" class="form-label">Procedimento</label>
+                <select class="form-control" id="procedimento" th:field="*{procedimento}" required>
+                  <option th:each="procedimento : ${procedimentos}" th:value="${procedimento.id}" th:text="${procedimento.nome}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+    </div>
+
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+		crossorigin="anonymous">
+	</script>
+</body>
+</html>

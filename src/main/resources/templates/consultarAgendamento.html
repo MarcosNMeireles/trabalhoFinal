@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Consultar Agendamento</title>
+
+    <style>
+        body {
+            background-image: url("https://imason.com.br/wp-content/uploads/2018/06/agendamento.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center center;
+        }
+    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <a class="navbar-brand" href="/"> <img src="https://cdn-icons-png.flaticon.com/512/5974/5974907.png"
+                style="width: 26px">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">INICIO</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/cadastrarAgendamento}">Novo Agendamento</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Navegador
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/consultarAgendamento">AGENDAMENTO</a></li>
+                <li><a class="dropdown-item" href="/cadastrarAgendamento">NOVO AGENDAMENTO</a></li>
+
+                <li><a class="dropdown-item" href="/consultarCliente">PACIENTE</a></li>
+                <li><a class="dropdown-item" href="/cadastrar-cliente">NOVO PACIENTE</a></li>
+
+                <li><a class="dropdown-item" href="/consultarProcedimento">PROCEDIMENTO</a></li>
+                <li><a class="dropdown-item" href="/cadastrarProcedimento">NOVO PROCEDIMENTO</a></li>
+
+                <li><a class="dropdown-item" href="/consultarMedico">MEDICO</a></li>
+                <li><a class="dropdown-item" href="/cadastrar_Medico">NOVO MEDICO</a></li>
+
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="/">INICIO</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div style="background-color: rgba(255, 255, 255, 0.5);">
+            <h1 class="text-center">Agendamentos</h1>
+        </div>
+        <div class="mb-3">
+            <label for="nomeFiltro" class="form-label">Filtrar por Nome do Cliente:</label>
+            <input type="text" class="form-control" id="nomeFiltro" placeholder="Digite o nome do cliente">
+        </div>
+
+        <!-- Tabela de agendamentos -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    <th>Cliente</th>
+                    <th>Médico</th>
+                    <th>Procedimento</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="agendamento : ${agendamentos}">
+                    <td th:text="${agendamento.data}"></td>
+                    <td th:text="${agendamento.hora}"></td>
+                    <td th:text="${agendamento.cliente.nome}"></td>
+                    <td th:text="${agendamento.medico.nome}"></td>
+                    <td th:text="${agendamento.procedimento.nome}"></td>
+                    <td>
+                        <a th:href="@{/editarAgendamento/{id}(id=${agendamento.id})}"
+                            class="btn btn-primary btn-sm">Editar</a>
+                        <a th:href="@{/excluirAgendamento/{id}(id=${agendamento.id})}"
+                            class="btn btn-danger btn-sm">Excluir</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>
+
+<script>
+    const inputFiltro = document.getElementById('nomeFiltro');
+    const tabelaAgendamentos = document.querySelector('.table');
+
+    inputFiltro.addEventListener('input', function () {
+        const filtro = inputFiltro.value.trim().toLowerCase();
+        const linhasAgendamentos = tabelaAgendamentos.querySelectorAll('tbody tr');
+
+        linhasAgendamentos.forEach(function (linhaAgendamento) {
+            const nomeCliente = linhaAgendamento.querySelector('td:nth-child(3)').textContent.toLowerCase();
+            if (nomeCliente.includes(filtro)) {
+                linhaAgendamento.style.display = '';
+            } else {
+                linhaAgendamento.style.display = 'none';
+            }
+        });
+    });
+</script>
